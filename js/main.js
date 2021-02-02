@@ -8,6 +8,7 @@ const getRandomNumber =  (min, max) => {
   if (min >= 0 && min <= max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
   }
+  // eslint-disable-next-line no-undef
   throw new Error(INVALID_ARGUMENT);
 };
 
@@ -22,6 +23,7 @@ const getRandomArbitrary = (min, max, digits) => {
   // метод toFixed оставляет у полученного случайного числа заданное количество цифр после запятой
     return (Math.random() * (max - min) + min).toFixed(digits);
   }
+  // eslint-disable-next-line no-undef
   throw new Error(INVALID_ARGUMENT);
 };
 
