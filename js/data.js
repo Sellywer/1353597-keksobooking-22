@@ -50,42 +50,32 @@ const PHOTOS = [
 ];
 
 const COUNT_OFFERS = 10;
+const AVATAR = {MIN: 1, MAX: 8};
+const PRICE = {MIN: 1000, MAX: 8000};
+const RoomsQuantity = {MIN: 1, MAX: 5}
+const GuestsQuantity = {MIN: 1, MAX: 8}
 
-const AVATAR_MIN = 1;
-const AVATAR_MAX = 8;
-
-const MIN_PRICE = 1000;
-const MAX_PRICE = 8000;
-
-const MIN_ROOMS = 1;
-const MAX_ROOMS = 5;
-
-const MIN_QUESTS = 1;
-const MAX_QUESTS  = 8;
-
-const X_MIN = 35.65000;
-const X_MAX = 35.70000;
-const Y_MIN = 139.70000;
-const Y_MAX = 139.80000;
+const LOCATION_X = {MIN: 35.65000, MAX: 35.70000};
+const LOCATION_Y = {MIN: 139.70000, MAX: 139.80000};
 const LOCATION_PRECISION = 5;
 
 const createOffer = () => {
 
-  const xRandom = getRandomFloat(X_MIN, X_MAX, LOCATION_PRECISION);
-  const yRandom = getRandomFloat(Y_MIN, Y_MAX, LOCATION_PRECISION);
+  const xRandom = getRandomFloat(LOCATION_X.MIN, LOCATION_X.MAX, LOCATION_PRECISION);
+  const yRandom = getRandomFloat(LOCATION_Y.MIN, LOCATION_Y.MAX, LOCATION_PRECISION);
 
   return {
     author: {
-      avatar: 'img/avatars/user0' + getRandomNumber(AVATAR_MIN, AVATAR_MAX) + '.png',
+      avatar: 'img/avatars/user0' + getRandomNumber(AVATAR.MIN, AVATAR.MAX) + '.png',
     },
 
     offer: {
       title: getRandomArrayElement(TITLE),
-      address: xRandom + ', ' + yRandom,
-      price: getRandomNumber(MIN_PRICE, MAX_PRICE),
+      address: '$xRandom, $yRandom',
+      price: getRandomNumber(PRICE.MIN, PRICE.MAX),
       type: getRandomArrayElement(TYPE),
-      rooms: getRandomNumber(MIN_ROOMS, MAX_ROOMS),
-      quests: getRandomNumber(MIN_QUESTS , MAX_QUESTS ),
+      rooms: getRandomNumber(RoomsQuantity.MIN, RoomsQuantity.MAX),
+      guests: getRandomNumber(GuestsQuantity.MIN , GuestsQuantity.MAX ),
       checkin:  getRandomArrayElement(CHECKIN__CHECKOUT),
       checkout: getRandomArrayElement(CHECKIN__CHECKOUT),
       features: formRandomArray(FEATURES),
