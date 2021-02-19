@@ -3,7 +3,7 @@ import {getRandomNumber, getRandomFloat, getRandomArrayElement, formRandomArray}
 const TITLE = [
   'Уютное место для Вашего отдыха',
   'Уютно и недорого',
-  'Не сдется для веченинок',
+  'Не сдается для веченинок',
   'Отпразнуйте свой день рождения весело',
   'Идеальное место для романтической встречи',
   'Отовись от шума города',
@@ -71,7 +71,7 @@ const createOffer = () => {
 
     offer: {
       title: getRandomArrayElement(TITLE),
-      address: '$xRandom, $yRandom',
+      address: xRandom + ' ,' + yRandom,
       price: getRandomNumber(PRICE.MIN, PRICE.MAX),
       type: getRandomArrayElement(TYPE),
       rooms: getRandomNumber(RoomsQuantity.MIN, RoomsQuantity.MAX),
@@ -90,4 +90,8 @@ const createOffer = () => {
   };
 };
 
-export {createOffer, COUNT_OFFERS};
+const similarOffers = new Array(COUNT_OFFERS).fill(null).map(createOffer);
+
+//similarOffers();
+
+export {similarOffers, createOffer};
