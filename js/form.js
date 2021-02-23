@@ -1,32 +1,51 @@
-const typeOfHousing = document.querySelector('#type');
-const priceOfHousing = document.querySelector('#price');
-const timeIn = document.querySelector('#timein');
-const timeOut = document.querySelector('#timeout');
+const form = document.querySelector('.ad-form');
+const typeOfHousing = form.querySelector('#type');
+const priceOfHousing = form.querySelector('#price');
+const timeIn = form.querySelector('#timein');
+const timeOut = form.querySelector('#timeout');
 
-typeOfHousing.addEventListener('change', () => {
-  let placeholder;
+const minPrice  = {
+  bungalow: 0,
+  flat: 1000,
+  house: 5000,
+  palace: 10000,
+};
 
-  switch (typeOfHousing.value) {
-    case 'bungalow':
-      placeholder = '0';
-      break
-    case 'flat':
-      placeholder = '1000';
-      break
-    case 'house':
-      placeholder = '5000';
-      break
-    case 'palace':
-      placeholder = '10000';
-      break
+priceOfHousing.addEventListener('invalid', () => {
+  if (priceOfHousing.validity.valueMissing) {
+    priceOfHousing.setCustomValidity('Обязательное поле');
+  } else {
+    priceOfHousing.setCustomValidity('');
   }
-  priceOfHousing.placeholder = placeholder;
 });
 
-timeIn.addEventListener('change', () => {
-  timeOut.value = timeIn.value;
-});
+const onPriceInput = (evt) => {
+  if (evt.target.validity.rangeUnderflow) {
+    evt.target.setCustomValidity (`Стоимость не должна быть меньше ${evt.target.min}`)
+  } else {
+    evt.target.setCustomValidity('')
+  }
+  evt.target.reportValidity();
+}
 
-timeOut.addEventListener('change', () => {
-  timeIn.value = timeOut.value;
-});
+const onSelectChange = (evt) => {
+  timeIn.value = evt.target.value;
+  timeOut.value = evt.target.value;
+}
+
+const onTypeInputChange = () => {
+  priceOfHousing.placeholder = minPrice[typeOfHousing.value];
+  priceOfHousing.min = minPrice[typeOfHousing.value];
+};
+
+const onFormSubmit = (evt) => {
+  evt.preventDefault();
+};
+
+priceOfHousing.addEventListener('input', onPriceInput);
+timeIn.addEventListener('change', onSelectChange);
+timeOut.addEventListener('change', onSelectChange);
+typeOfHousing.addEventListener('change', onTypeInputChange);
+form.addEventListener('submit', onFormSubmit);
+
+onTypeInputChange();

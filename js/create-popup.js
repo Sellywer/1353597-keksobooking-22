@@ -6,13 +6,11 @@ const cardTemplate = document.querySelector('#card')
   .content
   .querySelector('.popup');
 
-const getTypeRu = (type) => {
-  switch (type) {
-    case 'bungalow': return 'Бунгало';
-    case 'flat': return 'Квартира';
-    case 'house': return 'Дом';
-    case 'palace': return 'Дворец';
-  }
+const getTypeRu = {
+  flat: 'Квартира',
+  bungalow: 'Бунгало',
+  house: 'Дом',
+  palace: 'Дворец',
 };
 
 const renderOfferCard = ({author, offer}) => {
@@ -24,7 +22,7 @@ const renderOfferCard = ({author, offer}) => {
   cardElement.querySelector('.popup__text--address').innerHTML = offer.address;
   cardElement.querySelector('.popup__text--price').innerHTML = `${offer.price} ₽/ночь`;
 
-  cardElement.querySelector('.popup__type').textContent = getTypeRu(offer.type);
+  cardElement.querySelector('.popup__type').textContent = getTypeRu[offer.type];
 
   cardElement.querySelector('.popup__text--capacity').textContent = `${offer.rooms} комнаты для ${offer.guests} гостей`;
   cardElement.querySelector('.popup__text--time').textContent = `Заезд после ${offer.checkin}, выезд до ${offer.checkout}`;
