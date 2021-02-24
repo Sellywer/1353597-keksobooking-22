@@ -17,7 +17,7 @@ const TYPE = [
   'palace',
   'flat',
   'house',
-  'bungalo',
+  'bungalow',
 ];
 
 const CHECKIN__CHECKOUT = [
