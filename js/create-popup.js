@@ -1,10 +1,12 @@
-import {similarOffers} from './data.js'
+import {similarOffers, createOffer} from './data.js'
 
 const mapCanvas = document.querySelector('#map-canvas');
 
 const cardTemplate = document.querySelector('#card')
   .content
   .querySelector('.popup');
+
+const offers = createOffer();
 
 const getTypeRu = {
   flat: 'Квартира',
@@ -50,4 +52,4 @@ const renderOfferCard = ({author, offer}) => {
 
 mapCanvas.appendChild(renderOfferCard(similarOffers[0]));
 
-export {renderOfferCard};
+export {renderOfferCard, offers};
