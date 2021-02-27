@@ -51,7 +51,7 @@ const PHOTOS = [
 
 const COUNT_OFFERS = 10;
 const AVATAR = {MIN: 1, MAX: 8};
-const PRICE = {MIN: 1000, MAX: 8000};
+const PRICE = {MIN: 0, MAX: 1000000};
 const RoomsQuantity = {MIN: 1, MAX: 5}
 const GuestsQuantity = {MIN: 1, MAX: 8}
 
@@ -92,6 +92,4 @@ const createOffer = () => {
 
 const similarOffers = new Array(COUNT_OFFERS).fill(null).map(createOffer);
 
-//similarOffers();
-
-export {similarOffers, createOffer};
+export {similarOffers, createOffer, LOCATION_PRECISION};
