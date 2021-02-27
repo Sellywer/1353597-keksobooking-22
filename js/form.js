@@ -1,3 +1,7 @@
+const MIN_TITLE_LENGTH = 30;
+const MAX_TITLE_LENGTH = 100;
+//const MAX_PRICE = 1000000;
+
 const form = document.querySelector('.ad-form');
 
 const typeOfHousing = form.querySelector('#type');
@@ -5,14 +9,14 @@ const priceOfHousing = form.querySelector('#price');
 const timeIn = form.querySelector('#timein');
 const timeOut = form.querySelector('#timeout');
 const address = form.querySelector('#address');
-const adFormHeader = form.querySelector('.ad-form-header');
-const adFormElements = form.querySelectorAll('.ad-form__element');
 
-address.readOnly = true;
+// новое
+//const fieldsetsAddForm = form.querySelectorAll('fieldset'); вроде не нужно
+const titleAd = form.querySelector('#title');
+const roomNumber = form.querySelector('#room_number');
+const capacity = form.querySelector('#capacity');
 
-const mapFilters = document.querySelector('.map__filters');
-const mapFiltersItem = mapFilters.querySelectorAll('.map__filter');
-const mapFeatures = document.querySelector('.map__features');
+//address.readOnly = true;
 
 const minPrice  = {
   bungalow: 0,
@@ -29,6 +33,29 @@ priceOfHousing.addEventListener('invalid', () => {
   }
 });
 
+// новое
+titleAd.addEventListener('invalid', () => {
+  if (titleAd.validity.valueMissing) {
+    titleAd.setCustomValidity('Обязательное поле');
+  } else {
+    titleAd.setCustomValidity('');
+  }
+});
+
+titleAd.addEventListener('input', () => {
+  const valueLength = titleAd.value.length;
+
+  if (valueLength < MIN_TITLE_LENGTH) {
+    titleAd.setCustomValidity('Еще '+ (MIN_TITLE_LENGTH - titleAd.length) +' симв.');
+  } else if (valueLength > MAX_TITLE_LENGTH) {
+    titleAd.setCustomValidity('Удалите лишние ' + (titleAd.length - MAX_TITLE_LENGTH) +' симв.');
+  } else {
+    titleAd.setCustomValidity('');
+  }
+
+  titleAd.reportValidity();
+});
+
 const onPriceInput = (evt) => {
   if (evt.target.validity.rangeUnderflow) {
     evt.target.setCustomValidity (`Стоимость не должна быть меньше ${evt.target.min}`)
@@ -36,6 +63,12 @@ const onPriceInput = (evt) => {
     evt.target.setCustomValidity('')
   }
   evt.target.reportValidity();
+
+  // if (evt.target.value > MAX_PRICE) {
+  //   evt.target.setCustomValidity('Цена не может быть больше ' + MAX_PRICE);
+  // } else {
+  //   evt.target.setCustomValidity('');
+  // }
 }
 
 const onSelectChange = (evt) => {
@@ -48,54 +81,41 @@ const onTypeInputChange = () => {
   priceOfHousing.min = minPrice[typeOfHousing.value];
 };
 
+const checkPlace = () => {
+  if (roomNumber.value === '100' && capacity.value !== '0') {
+    capacity.setCustomValidity('Выберите вариант "Не для гостей"');
+  } else if (roomNumber.value !== '100' && capacity.value === '0') {
+    capacity.setCustomValidity('Выберите другой вариант');
+  } else if (roomNumber.value < capacity.value) {
+    capacity.setCustomValidity('Выберите меньшее число гостей');
+  } else {
+    capacity.setCustomValidity('');
+  }
+};
+
+capacity.addEventListener('change', () => {
+  checkPlace();
+});
+
+roomNumber.addEventListener('change', () => {
+  checkPlace();
+});
+
 const onFormSubmit = (evt) => {
   evt.preventDefault();
 };
 
-const setFormInputHandlers = () => {
-  priceOfHousing.addEventListener('input', onPriceInput);
-  timeIn.addEventListener('change', onSelectChange);
-  timeOut.addEventListener('change', onSelectChange);
-  typeOfHousing.addEventListener('change', onTypeInputChange);
-  form.addEventListener('submit', onFormSubmit);
-};
-
-const getAdFormDisabled = () => {
-  form.classList.add('ad-form--disabled');
-  adFormHeader.disabled = true;
-  adFormElements.forEach(formElement => formElement.disabled = true);
-};
-
-const getAdFormActive = () => {
-  form.classList.remove('ad-form--disabled');
-  adFormHeader.disabled = false;
-  adFormElements.forEach(formElement => formElement.disabled = false);
-};
-
-const getMapFiltersDisabled = () => {
-  mapFilters.classList.add('map__filters--disabled');
-  mapFiltersItem.forEach(mapFilterId => mapFilterId.disabled = true);
-  mapFeatures.disabled = true;
-};
-
-const getMapFiltersActive = () => {
-  mapFilters.classList.remove('map__filters--disabled');
-  mapFiltersItem.forEach(mapFilterId => mapFilterId.disabled = false);
-  mapFeatures.disabled = false;
-};
-
-const disabledPageState = () => {
-  getAdFormDisabled();
-  getMapFiltersDisabled();
-  // console.log('Page is disabled');
-};
-
-const activatePageState = () => {
-  getAdFormActive();
-  getMapFiltersActive();
-};
+//const setFormInputHandlers = () => {
+priceOfHousing.addEventListener('input', onPriceInput);
+timeIn.addEventListener('change', onSelectChange);
+timeOut.addEventListener('change', onSelectChange);
+typeOfHousing.addEventListener('change', onTypeInputChange);
+form.addEventListener('submit', onFormSubmit);
+//};
 
 onTypeInputChange();
-disabledPageState();
 
-export {setFormInputHandlers, activatePageState, address}
+
+
+//setFormInputHandlers,
+export {form, address}

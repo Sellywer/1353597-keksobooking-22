@@ -1,14 +1,22 @@
-//import {activatePageState, address} from './form.js';
+import {activatePageState} from './disabled-page.js';
+import {renderOfferCard} from './create-popup.js';
+import {address} from './form.js';
+import {similarOffers} from './data.js';
 
-const TOKYO_LAT = 35.6804;
-const TOKYO_LNG = 139.759;
-const SCALE = 10;
+const CENTER_LAT = 35.68950;
+const CENTER_LNG = 139.69171;
+const SCALE = 12;
 
 /* global L:readonly */
-const map = L.map('map-canvas').setView({
-  lat: TOKYO_LAT,
-  lng: TOKYO_LNG,
-}, SCALE);
+const map = L.map('map-canvas')
+  .on('load', () => {
+    activatePageState();
+    address.value = `${CENTER_LAT}, ${CENTER_LNG}`;
+  })
+  .setView({
+    lat: CENTER_LAT,
+    lng: CENTER_LNG,
+  }, SCALE);
 
 L.tileLayer(
   'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
@@ -17,12 +25,47 @@ L.tileLayer(
   },
 ).addTo(map);
 
-/*
-const marker = L.marker(
-  {
-    lat: 35.66000,
-    lng: 139.78000,
-  },
-);
+const mainPinIcon = L.icon({
+  iconUrl: '../img/main-pin.svg',
+  iconSize: [52, 52],
+  iconAnchor: [26, 52],
+});
 
-marker.addTo(map);*/
+const mainMarker = L.marker({
+  lat: CENTER_LAT,
+  lng: CENTER_LNG,
+}, {
+  draggable: true,
+  icon: mainPinIcon,
+});
+
+mainMarker.addTo(map);
+
+mainMarker.on('moveend', (evt) => {
+  address.value = `${evt.target.getLatLng().lat.toFixed(5)}, ${evt.target.getLatLng().lng.toFixed(5)}`;
+});
+
+const offerIcon = L.icon({
+  iconUrl: '/img/pin.svg',
+  iconSize: [52, 52],
+  iconAnchor: [26, 52],
+});
+
+
+similarOffers.forEach((similarOffers) => {
+  const marker = L.marker(
+    {
+      lat: similarOffers.location.x,
+      lng: similarOffers.location.y,
+    },
+    {
+      icon: offerIcon,
+    },
+  );
+  marker
+    .addTo(map)
+    .bindPopup(
+      renderOfferCard(similarOffers),
+    );
+});
+
