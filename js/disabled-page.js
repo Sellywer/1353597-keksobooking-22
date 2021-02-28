@@ -7,38 +7,38 @@ const mapFilters = document.querySelector('.map__filters');
 const mapFiltersItem = mapFilters.querySelectorAll('.map__filter');
 const mapFeatures = document.querySelector('.map__features');
 
-const getAdFormDisabled = () => {
+const setAdFormDisabled = () => {
   form.classList.add('ad-form--disabled');
   adFormHeader.disabled = true;
   adFormElements.forEach(formElement => formElement.disabled = true);
 };
 
-const getAdFormActive = () => {
+const setAdFormActive = () => {
   form.classList.remove('ad-form--disabled');
   adFormHeader.disabled = false;
   adFormElements.forEach(formElement => formElement.disabled = false);
 };
 
-const getMapFiltersDisabled = () => {
+const setMapFiltersDisabled = () => {
   mapFilters.classList.add('map__filters--disabled');
   mapFiltersItem.forEach(mapFilterId => mapFilterId.disabled = true);
   mapFeatures.disabled = true;
 };
 
-const getMapFiltersActive = () => {
+const setMapFiltersActive = () => {
   mapFilters.classList.remove('map__filters--disabled');
   mapFiltersItem.forEach(mapFilterId => mapFilterId.disabled = false);
   mapFeatures.disabled = false;
 };
 
 const disabledPageState = () => {
-  getAdFormDisabled();
-  getMapFiltersDisabled();
+  setAdFormDisabled();
+  setMapFiltersDisabled();
 };
 
 const activatePageState = () => {
-  getAdFormActive();
-  getMapFiltersActive();
+  setAdFormActive();
+  setMapFiltersActive();
 };
 
 disabledPageState();
