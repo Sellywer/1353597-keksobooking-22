@@ -1,5 +1,4 @@
-const MIN_TITLE_LENGTH = 30;
-const MAX_TITLE_LENGTH = 100;
+const TITLE_LENGTH = {MIN: 1, MAX: 5}
 //const MAX_PRICE = 1000000;
 
 const form = document.querySelector('.ad-form');
@@ -26,29 +25,22 @@ const minPrice  = {
 };
 
 priceOfHousing.addEventListener('invalid', () => {
-  if (priceOfHousing.validity.valueMissing) {
-    priceOfHousing.setCustomValidity('Обязательное поле');
-  } else {
-    priceOfHousing.setCustomValidity('');
-  }
+  const errorMessage = priceOfHousing.validity.valueMissing ? 'Обязательное поле' : '';
+  priceOfHousing.setCustomValidity(errorMessage);
 });
 
-// новое
 titleAd.addEventListener('invalid', () => {
-  if (titleAd.validity.valueMissing) {
-    titleAd.setCustomValidity('Обязательное поле');
-  } else {
-    titleAd.setCustomValidity('');
-  }
+  const errorMessage = titleAd.validity.valueMissing ? 'Обязательное поле' : '';
+  titleAd.setCustomValidity(errorMessage);
 });
 
 titleAd.addEventListener('input', () => {
   const valueLength = titleAd.value.length;
 
-  if (valueLength < MIN_TITLE_LENGTH) {
-    titleAd.setCustomValidity('Еще '+ (MIN_TITLE_LENGTH - titleAd.length) +' симв.');
-  } else if (valueLength > MAX_TITLE_LENGTH) {
-    titleAd.setCustomValidity('Удалите лишние ' + (titleAd.length - MAX_TITLE_LENGTH) +' симв.');
+  if (valueLength < TITLE_LENGTH.MIN) {
+    titleAd.setCustomValidity('Еще '+ (TITLE_LENGTH.MIN - titleAd.length) +' симв.');
+  } else if (valueLength > TITLE_LENGTH.MAX) {
+    titleAd.setCustomValidity('Удалите лишние ' + (titleAd.length - TITLE_LENGTH.MAX) +' симв.');
   } else {
     titleAd.setCustomValidity('');
   }

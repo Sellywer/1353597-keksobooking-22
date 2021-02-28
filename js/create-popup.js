@@ -4,8 +4,6 @@ const cardTemplate = document.querySelector('#card')
   .content
   .querySelector('.popup');
 
-const offers = similarOffers;
-
 const getTypeRu = {
   flat: 'Квартира',
   bungalow: 'Бунгало',
@@ -47,7 +45,7 @@ const renderOfferCard = ({author, offer}) => {
 
   return cardElement;
 };
-similarOffers
+
 const cartHouse = renderOfferCard(similarOffers[0]);
 
-export {renderOfferCard, offers, cartHouse};
+export {renderOfferCard, cartHouse};
