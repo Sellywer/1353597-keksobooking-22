@@ -55,12 +55,6 @@ const onPriceInput = (evt) => {
     evt.target.setCustomValidity('')
   }
   evt.target.reportValidity();
-
-  // if (evt.target.value > MAX_PRICE) {
-  //   evt.target.setCustomValidity('Цена не может быть больше ' + MAX_PRICE);
-  // } else {
-  //   evt.target.setCustomValidity('');
-  // }
 }
 
 const onSelectChange = (evt) => {
