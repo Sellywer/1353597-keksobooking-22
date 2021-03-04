@@ -11,12 +11,12 @@ const getTypeRu = {
   palace: 'Дворец',
 };
 
-const renderOfferCard = ( {author, offer} ) => {
+const renderOfferCard = (offers) => {
 
   const cardElement = cardTemplate.cloneNode(true);
-
-  cardElement.querySelector('img').src = author.avatar;
-  //cardElement.querySelector('.popup__avatar').src = `${author.avatar}`;
+  const {offer, author} = offers;
+  // cardElement.querySelector('img').src = author.avatar;
+  cardElement.querySelector('.popup__avatar').setAttribute('src', author.avatar);
   cardElement.querySelector('.popup__title').textContent = offer.title;
   cardElement.querySelector('.popup__text--address').innerHTML = offer.address;
   cardElement.querySelector('.popup__text--price').innerHTML = `${offer.price} ₽/ночь`;
@@ -47,6 +47,13 @@ const renderOfferCard = ( {author, offer} ) => {
   return cardElement;
 };
 
-//const cartHouse = renderOfferCard(similarOffers[0]);
+const createOffers = (offers) => {
+  const offersFragment = document.createDocumentFragment();
+  offers.forEach((offer) => {
+    const fragment = renderOfferCard(offer);
+    offersFragment.appendChild(fragment);
+  });
+  return offersFragment;
+};
 
-export {renderOfferCard};
+export {renderOfferCard, createOffers};

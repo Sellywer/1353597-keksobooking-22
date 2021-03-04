@@ -55,8 +55,8 @@ const createOfferPins = ({location}) => {
   location.forEach((offers) => {
     const marker = L.marker(
       {
-        lat: location.lat,
-        lng: location.lng,
+        lat: location.x,
+        lng: location.y,
       },
       {
         icon: offerIcon,

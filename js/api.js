@@ -1,19 +1,23 @@
+import {showAlert} from './util.js';
 
-const getData = (url, onSuccess, onFail) => {
-  return fetch(url)
-    .then ((response => {
+const getData = (onSuccess) => {
+  fetch('https://22.javascript.pages.academy/keksobooking/data')
+    .then((response) => {
       if (response.ok) {
         return response.json();
-      }
-      onFail(`Не удалось загрузить данные об объектах: ${response.text}`);
-    }))
-    .then(onSuccess)
-    .catch(onFail);
-}
+      } throw new Error();
+    })
+    .then((data) => {
+      onSuccess(data);
+    })
+    .catch(() => {
+      showAlert('Не удалось получить данные с сервера. Попробуйте позже');
+    });
+};
 
-const sendData = (url, onSuccess, onFail, body) => {
-  return fetch(
-    url,
+const sendData = (onSuccess, onFail, body) => {
+  fetch (
+    'https://22.javascript.pages.academy/keksobooking/',
     {
       method: 'POST',
       body,
@@ -21,11 +25,14 @@ const sendData = (url, onSuccess, onFail, body) => {
   )
     .then((response) => {
       if (response.ok) {
-        return onSuccess();
+        onSuccess();
+      } else {
+        onFail();
       }
-      onFail();
     })
-    .catch(onFail);
+    .catch(() => {
+      onFail();
+    });
 };
 
-export { getData, sendData };
+export {getData, sendData};
