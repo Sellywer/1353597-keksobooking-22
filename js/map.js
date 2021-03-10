@@ -1,11 +1,11 @@
 import {activatePageState} from './disabled-page.js';
-import {renderOfferCard} from './create-popup.js';
+import {createOffers} from './create-popup.js';
 import {address} from './form.js';
 //import {similarOffers} from './data.js';
 
 const CENTER_LAT = 35.68950;
 const CENTER_LNG = 139.69171;
-const SCALE = 12;
+const SCALE = 10;
 
 /* global L:readonly */
 const map = L.map('map-canvas')
@@ -47,16 +47,17 @@ mainMarker.on('moveend', (evt) => {
 
 const offerIcon = L.icon({
   iconUrl: '/img/pin.svg',
-  iconSize: [40, 40],
-  iconAnchor: [20, 40],
+  iconSize: [52, 52],
+  iconAnchor: [26, 52],
 });
 
-const createOfferPins = ({location}) => {
-  location.forEach((offers) => {
+const createOfferPins = (add) => {
+
+  add.forEach((offer) => {
     const marker = L.marker(
       {
-        lat: location.x,
-        lng: location.y,
+        lat: offer.location.lat,
+        lng: offer.location.lng,
       },
       {
         icon: offerIcon,
@@ -65,10 +66,14 @@ const createOfferPins = ({location}) => {
     marker
       .addTo(map)
       .bindPopup(
-        renderOfferCard(offers), {
+        createOffers(offer), {
           keepInView: true },
       );
   });
 };
 
-export {createOfferPins}
+const setAddress = () => {
+  address.value = `${CENTER_LAT}, ${CENTER_LNG}`;
+};
+
+export {createOfferPins, setAddress, mainMarker, CENTER_LAT, CENTER_LNG}

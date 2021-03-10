@@ -1,14 +1,17 @@
-import {showAlert} from './util.js';
+import {showAlert} from './utils.js';
+
+const SERVER_GET_URL = 'https://22.javascript.pages.academy/keksobooking/data';
+const SERVER_POST_URL = 'https://22.javascript.pages.academy/keksobooking';
 
 const getData = (onSuccess) => {
-  fetch('https://22.javascript.pages.academy/keksobooking/data')
+  fetch(SERVER_GET_URL)
     .then((response) => {
       if (response.ok) {
         return response.json();
       } throw new Error();
     })
-    .then((data) => {
-      onSuccess(data);
+    .then((add) => {
+      onSuccess(add);
     })
     .catch(() => {
       showAlert('Не удалось получить данные с сервера. Попробуйте позже');
@@ -16,8 +19,7 @@ const getData = (onSuccess) => {
 };
 
 const sendData = (onSuccess, onFail, body) => {
-  fetch (
-    'https://22.javascript.pages.academy/keksobooking/',
+  fetch ( SERVER_POST_URL,
     {
       method: 'POST',
       body,

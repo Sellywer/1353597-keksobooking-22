@@ -11,11 +11,9 @@ const getTypeRu = {
   palace: 'Дворец',
 };
 
-const renderOfferCard = (offers) => {
+const renderOfferCard = ({offer, author}) => {
 
   const cardElement = cardTemplate.cloneNode(true);
-  const {offer, author} = offers;
-  // cardElement.querySelector('img').src = author.avatar;
   cardElement.querySelector('.popup__avatar').setAttribute('src', author.avatar);
   cardElement.querySelector('.popup__title').textContent = offer.title;
   cardElement.querySelector('.popup__text--address').innerHTML = offer.address;
@@ -47,12 +45,10 @@ const renderOfferCard = (offers) => {
   return cardElement;
 };
 
-const createOffers = (offers) => {
+const createOffers = (offer) => {
   const offersFragment = document.createDocumentFragment();
-  offers.forEach((offer) => {
-    const fragment = renderOfferCard(offer);
-    offersFragment.appendChild(fragment);
-  });
+  const fragment = renderOfferCard(offer);
+  offersFragment.appendChild(fragment);
   return offersFragment;
 };
 
