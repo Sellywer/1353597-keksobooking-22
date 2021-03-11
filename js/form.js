@@ -1,6 +1,6 @@
 //import {setAddress} from './map.js'
 
-const TITLE_LENGTH = {MIN: 30, MAX: 100}
+const TitileLength = {MIN: 30, MAX: 100}
 const MAX_PRICE = 1000000;
 
 const minPrice  = {
@@ -30,10 +30,10 @@ titleAd.addEventListener('invalid', () => {
 titleAd.addEventListener('input', () => {
   const valueLength = titleAd.value.length;
 
-  if (valueLength < TITLE_LENGTH.MIN) {
-    titleAd.setCustomValidity('Ещё ' + (TITLE_LENGTH.MIN - valueLength) + ' симв.');
-  } else if (valueLength > TITLE_LENGTH.MAX) {
-    titleAd.setCustomValidity('Удалите лишние ' + (valueLength - TITLE_LENGTH.MAX) + ' симв.');
+  if (valueLength < TitileLength.MIN) {
+    titleAd.setCustomValidity('Ещё ' + (TitileLength.MIN - valueLength) + ' симв.');
+  } else if (valueLength > TitileLength.MAX) {
+    titleAd.setCustomValidity('Удалите лишние ' + (valueLength - TitileLength.MAX) + ' симв.');
   } else {
     titleAd.setCustomValidity('');
   }

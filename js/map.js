@@ -1,7 +1,9 @@
 import {activatePageState} from './disabled-page.js';
-import {createOffers} from './create-popup.js';
+import {renderOfferCard} from './create-popup.js';
 import {address} from './form.js';
-//import {similarOffers} from './data.js';
+import {getFilters} from './filters.js'
+
+const ADVERTISEMENTS_NUMBER = 5;
 
 const CENTER_LAT = 35.68950;
 const CENTER_LNG = 139.69171;
@@ -52,24 +54,29 @@ const offerIcon = L.icon({
 });
 
 const createOfferPins = (add) => {
-
-  add.forEach((offer) => {
-    const marker = L.marker(
-      {
-        lat: offer.location.lat,
-        lng: offer.location.lng,
-      },
-      {
-        icon: offerIcon,
-      },
-    );
-    marker
-      .addTo(map)
-      .bindPopup(
-        createOffers(offer), {
-          keepInView: true },
+  add
+    .slice()
+    .filter(getFilters)
+    .slice(0, ADVERTISEMENTS_NUMBER)
+    .forEach((offer) => {
+      const marker = L.marker(
+        {
+          lat: offer.location.lat,
+          lng: offer.location.lng,
+        },
+        {
+          icon: offerIcon,
+        },
       );
-  });
+      marker
+        .addTo(map)
+        .bindPopup(
+          renderOfferCard(offer),
+          {
+            keepInView: true,
+          },
+        );
+    });
 };
 
 const setAddress = () => {

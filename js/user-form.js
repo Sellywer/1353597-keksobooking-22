@@ -7,12 +7,12 @@ import {mapFilters} from './disabled-page.js';
 import {mainMarker, CENTER_LAT, CENTER_LNG} from './map.js';
 
 
-const setUserFormSubmit = (Proverka) => {
+const setUserFormSubmit = (onSuccess) => {
 
   form.addEventListener('submit', (evt) => {
     evt.preventDefault();
     sendData(
-      () => Proverka(),
+      () => onSuccess(),
       () => showErrorMessage('Не удалось отправить форму. Попробуйте ещё раз'),
       new FormData(evt.target),
     );

@@ -8,10 +8,11 @@ const getData = (onSuccess) => {
     .then((response) => {
       if (response.ok) {
         return response.json();
-      } throw new Error();
+      }
+      throw new Error();
     })
-    .then((add) => {
-      onSuccess(add);
+    .then((ads) => {
+      onSuccess(ads);
     })
     .catch(() => {
       showAlert('Не удалось получить данные с сервера. Попробуйте позже');

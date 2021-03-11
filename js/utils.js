@@ -61,13 +61,9 @@ const showAlert = (message='Не удалось загрузить данные'
   }, ALERT_SHOW_TIME);
 }
 
-const isEscEvent = (evt) => {
-  return evt.key === 'Escape' || evt.key === 'Esc';
-};
+const isEscEvent = (evt) => evt.key === 'Escape' || evt.key === 'Esc';
 
-const isEnterEvent = (evt) => {
-  return evt.key === 'Enter';
-};
+const isEnterEvent = (evt) => evt.key === 'Enter';
 
 export {getRandomNumber, getRandomFloat, getRandomArrayElement, formRandomArray,
   showAlert, isEscEvent, isEnterEvent};
