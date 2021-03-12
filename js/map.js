@@ -1,11 +1,13 @@
 import {activatePageState} from './disabled-page.js';
 import {renderOfferCard} from './create-popup.js';
 import {address} from './form.js';
-import {similarOffers} from './data.js';
+import {getFilters} from './filters.js'
+
+const COUNT_OFFERS = 10;
 
 const CENTER_LAT = 35.68950;
 const CENTER_LNG = 139.69171;
-const SCALE = 12;
+const SCALE = 10;
 
 /* global L:readonly */
 const map = L.map('map-canvas')
@@ -51,21 +53,47 @@ const offerIcon = L.icon({
   iconAnchor: [26, 52],
 });
 
+let markers = [];
 
-similarOffers.forEach((similarOffers) => {
-  const marker = L.marker(
-    {
-      lat: similarOffers.location.x,
-      lng: similarOffers.location.y,
-    },
-    {
-      icon: offerIcon,
-    },
-  );
-  marker
-    .addTo(map)
-    .bindPopup(
-      renderOfferCard(similarOffers),
-    );
-});
+const createOfferPins = (add) => {
+  add
+    .slice()
+    .filter(getFilters)
+    .slice(0, COUNT_OFFERS)
+    .forEach((offer) => {
+      const marker = L.marker(
+        {
+          lat: offer.location.lat,
+          lng: offer.location.lng,
+        },
+        {
+          icon: offerIcon,
+        },
+      );
 
+      markers.push(marker);
+
+      marker
+        .addTo(map)
+        .bindPopup(
+          renderOfferCard(offer),
+          {
+            keepInView: true,
+          },
+        );
+    });
+};
+
+const setAddress = () => {
+  address.value = `${CENTER_LAT}, ${CENTER_LNG}`;
+};
+
+const removeMarkers = () => {
+  markers.forEach((marker) => {
+    map.removeLayer(marker);
+  });
+
+  markers = [];
+}
+
+export {createOfferPins, setAddress, mainMarker, CENTER_LAT, CENTER_LNG, removeMarkers}

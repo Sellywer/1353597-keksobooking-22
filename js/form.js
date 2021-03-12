@@ -1,21 +1,7 @@
-const TITLE_LENGTH = {MIN: 1, MAX: 5}
-//const MAX_PRICE = 1000000;
+//import {setAddress} from './map.js'
 
-const form = document.querySelector('.ad-form');
-
-const typeOfHousing = form.querySelector('#type');
-const priceOfHousing = form.querySelector('#price');
-const timeIn = form.querySelector('#timein');
-const timeOut = form.querySelector('#timeout');
-const address = form.querySelector('#address');
-
-// новое
-//const fieldsetsAddForm = form.querySelectorAll('fieldset'); вроде не нужно
-const titleAd = form.querySelector('#title');
-const roomNumber = form.querySelector('#room_number');
-const capacity = form.querySelector('#capacity');
-
-//address.readOnly = true;
+const TitileLength = {MIN: 30, MAX: 100}
+const MAX_PRICE = 1000000;
 
 const minPrice  = {
   bungalow: 0,
@@ -24,10 +10,17 @@ const minPrice  = {
   palace: 10000,
 };
 
-priceOfHousing.addEventListener('invalid', () => {
-  const errorMessage = priceOfHousing.validity.valueMissing ? 'Обязательное поле' : '';
-  priceOfHousing.setCustomValidity(errorMessage);
-});
+const form = document.querySelector('.ad-form');
+const titleAd = form.querySelector('#title');
+const typeOfHousing = form.querySelector('#type');
+const priceOfHousing = form.querySelector('#price');
+const timeIn = form.querySelector('#timein');
+const timeOut = form.querySelector('#timeout');
+const roomNumber = form.querySelector('#room_number');
+const capacity = form.querySelector('#capacity');
+const address = form.querySelector('#address');
+
+// Заголовок
 
 titleAd.addEventListener('invalid', () => {
   const errorMessage = titleAd.validity.valueMissing ? 'Обязательное поле' : '';
@@ -37,41 +30,52 @@ titleAd.addEventListener('invalid', () => {
 titleAd.addEventListener('input', () => {
   const valueLength = titleAd.value.length;
 
-  if (valueLength < TITLE_LENGTH.MIN) {
-    titleAd.setCustomValidity('Еще '+ (TITLE_LENGTH.MIN - titleAd.length) +' симв.');
-  } else if (valueLength > TITLE_LENGTH.MAX) {
-    titleAd.setCustomValidity('Удалите лишние ' + (titleAd.length - TITLE_LENGTH.MAX) +' симв.');
+  if (valueLength < TitileLength.MIN) {
+    titleAd.setCustomValidity('Ещё ' + (TitileLength.MIN - valueLength) + ' симв.');
+  } else if (valueLength > TitileLength.MAX) {
+    titleAd.setCustomValidity('Удалите лишние ' + (valueLength - TitileLength.MAX) + ' симв.');
   } else {
     titleAd.setCustomValidity('');
   }
-
   titleAd.reportValidity();
+});
+
+// Прайс и тип жилья
+
+typeOfHousing.addEventListener('change', () => {
+  priceOfHousing.placeholder = minPrice[typeOfHousing.value];
+  priceOfHousing.min = minPrice[typeOfHousing.value];
+});
+
+priceOfHousing.addEventListener('invalid', () => {
+  const errorMessage = priceOfHousing.validity.valueMissing ? 'Обязательное поле' : '';
+  priceOfHousing.setCustomValidity(errorMessage);
 });
 
 const onPriceInput = (evt) => {
   if (evt.target.validity.rangeUnderflow) {
     evt.target.setCustomValidity (`Стоимость не должна быть меньше ${evt.target.min}`)
+  } else if (evt.target.value > MAX_PRICE) {
+    evt.target.setCustomValidity('Цена не может быть больше ' + MAX_PRICE);
   } else {
     evt.target.setCustomValidity('')
   }
   evt.target.reportValidity();
-
-  // if (evt.target.value > MAX_PRICE) {
-  //   evt.target.setCustomValidity('Цена не может быть больше ' + MAX_PRICE);
-  // } else {
-  //   evt.target.setCustomValidity('');
-  // }
 }
+
+priceOfHousing.addEventListener('input', onPriceInput);
+
+// Время
 
 const onSelectChange = (evt) => {
   timeIn.value = evt.target.value;
   timeOut.value = evt.target.value;
 }
 
-const onTypeInputChange = () => {
-  priceOfHousing.placeholder = minPrice[typeOfHousing.value];
-  priceOfHousing.min = minPrice[typeOfHousing.value];
-};
+timeIn.addEventListener('change', onSelectChange);
+timeOut.addEventListener('change', onSelectChange);
+
+// Гости и комнаты
 
 const checkPlace = () => {
   if (roomNumber.value === '100' && capacity.value !== '0') {
@@ -93,21 +97,9 @@ roomNumber.addEventListener('change', () => {
   checkPlace();
 });
 
-const onFormSubmit = (evt) => {
-  evt.preventDefault();
-};
 
-//const setFormInputHandlers = () => {
-priceOfHousing.addEventListener('input', onPriceInput);
-timeIn.addEventListener('change', onSelectChange);
-timeOut.addEventListener('change', onSelectChange);
-typeOfHousing.addEventListener('change', onTypeInputChange);
-form.addEventListener('submit', onFormSubmit);
-//};
+// Адрес нередактируется
 
-onTypeInputChange();
+address.setAttribute('readonly', 'readonly');
 
-
-
-//setFormInputHandlers,
 export {form, address}

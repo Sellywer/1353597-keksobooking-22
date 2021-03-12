@@ -43,4 +43,4 @@ const activatePageState = () => {
 
 disabledPageState();
 
-export {activatePageState, disabledPageState}
+export {activatePageState, disabledPageState, mapFilters}

@@ -1,5 +1,3 @@
-import {similarOffers} from './data.js'
-
 const cardTemplate = document.querySelector('#card')
   .content
   .querySelector('.popup');
@@ -11,11 +9,10 @@ const getTypeRu = {
   palace: 'Дворец',
 };
 
-const renderOfferCard = ({author, offer}) => {
+const renderOfferCard = ({offer, author}) => {
 
   const cardElement = cardTemplate.cloneNode(true);
-
-  cardElement.querySelector('img').src = author.avatar;
+  cardElement.querySelector('.popup__avatar').setAttribute('src', author.avatar);
   cardElement.querySelector('.popup__title').textContent = offer.title;
   cardElement.querySelector('.popup__text--address').innerHTML = offer.address;
   cardElement.querySelector('.popup__text--price').innerHTML = `${offer.price} ₽/ночь`;
@@ -39,13 +36,20 @@ const renderOfferCard = ({author, offer}) => {
   photosGallery.innerHTML = '';
 
   for (let photosList of offer.photos) {
-    const element = `<img src="${photosList}" class="popup__photo" width="50" height="40" alt="Изображение места"></img>`;
+    const element = `<img src="${photosList}" class="popup__photo" width="45" height="40" alt="Фотография жилья"></img>`;
     photosGallery.insertAdjacentHTML('beforeend', element);
   }
 
   return cardElement;
 };
 
-const cartHouse = renderOfferCard(similarOffers[0]);
+// const createOffers = (offer) => {
+//   const offersFragment = document.createDocumentFragment();
+//   const fragment = renderOfferCard(offer);
+//   offersFragment.appendChild(fragment);
+//   return offersFragment;
+// };
 
-export {renderOfferCard, cartHouse};
+export {renderOfferCard
+  // , createOffers
+};
