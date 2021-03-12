@@ -3,7 +3,7 @@ import {renderOfferCard} from './create-popup.js';
 import {address} from './form.js';
 import {getFilters} from './filters.js'
 
-const ADVERTISEMENTS_NUMBER = 5;
+const COUNT_OFFERS = 10;
 
 const CENTER_LAT = 35.68950;
 const CENTER_LNG = 139.69171;
@@ -53,11 +53,13 @@ const offerIcon = L.icon({
   iconAnchor: [26, 52],
 });
 
+let markers = [];
+
 const createOfferPins = (add) => {
   add
     .slice()
     .filter(getFilters)
-    .slice(0, ADVERTISEMENTS_NUMBER)
+    .slice(0, COUNT_OFFERS)
     .forEach((offer) => {
       const marker = L.marker(
         {
@@ -68,6 +70,9 @@ const createOfferPins = (add) => {
           icon: offerIcon,
         },
       );
+
+      markers.push(marker);
+
       marker
         .addTo(map)
         .bindPopup(
@@ -83,4 +88,12 @@ const setAddress = () => {
   address.value = `${CENTER_LAT}, ${CENTER_LNG}`;
 };
 
-export {createOfferPins, setAddress, mainMarker, CENTER_LAT, CENTER_LNG}
+const removeMarkers = () => {
+  markers.forEach((marker) => {
+    map.removeLayer(marker);
+  });
+
+  markers = [];
+}
+
+export {createOfferPins, setAddress, mainMarker, CENTER_LAT, CENTER_LNG, removeMarkers}
