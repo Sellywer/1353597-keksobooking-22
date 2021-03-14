@@ -43,13 +43,4 @@ const renderOfferCard = ({offer, author}) => {
   return cardElement;
 };
 
-// const createOffers = (offer) => {
-//   const offersFragment = document.createDocumentFragment();
-//   const fragment = renderOfferCard(offer);
-//   offersFragment.appendChild(fragment);
-//   return offersFragment;
-// };
-
-export {renderOfferCard
-  // , createOffers
-};
+export {renderOfferCard};

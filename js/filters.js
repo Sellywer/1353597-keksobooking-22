@@ -1,9 +1,9 @@
 const filter = document.querySelector('.map__filters');
 const type = filter.querySelector('#housing-type');
 const price = filter.querySelector('#housing-price');
-// const rooms = filter.querySelector('#housing-rooms');
-// const guests = filter.querySelector('#housing-guests');
-// const features = filter.querySelector('#housing-features');
+const rooms = filter.querySelector('#housing-rooms');
+const guests = filter.querySelector('#housing-guests');
+const features = filter.querySelector('#housing-features');
 
 const PRICE_TYPES = {
   'LOW': 10000,
@@ -25,10 +25,31 @@ const getFilterByPrice = (data) => {
   }
 };
 
+const getFilterByRooms = (data) => rooms.value === 'any' || data.offer.rooms === parseInt(rooms.value, 10);
+
+const getFilterByGuests = (data) => {
+  return (guests.value !== 'any') ? data.offer.guests === parseInt(guests.value, 10) : true;
+}
+
+const getFilterByFeatures = (data) => {
+  let result = true;
+
+  features.querySelectorAll('input:checked').forEach((item) => {
+    if (data.indexOf(item.value) === -1) {
+      result = false;
+    }
+  });
+
+  return result;
+}
+
 const getFilters = (data) => {
   return (
     getFilterByType(data) &&
-    getFilterByPrice(data)
+    getFilterByPrice(data) &&
+    getFilterByRooms(data) &&
+    getFilterByGuests (data) &&
+    getFilterByFeatures(data.offer.features)
   )
 }
 
