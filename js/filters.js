@@ -9,8 +9,11 @@ const PRICE_TYPES = {
   'LOW': 10000,
   'HIGH': 50000,
 };
+// пробую фильтр с типой жилья деструктурировать
 
-const getFilterByType = (data) => type.value === 'any' || data.offer.type === type.value;
+const getFilterByType = (offer) => type.value === 'any' || offer.type === type.value;
+// или так пробовала
+// const getFilterByType = (type) => type.value === 'any' || type === type.value;
 
 const getFilterByPrice = (data) => {
   switch (price.value) {
