@@ -1,5 +1,5 @@
 const filter = document.querySelector('.map__filters');
-const type = filter.querySelector('#housing-type');
+const typeFilter = filter.querySelector('#housing-type');
 const price = filter.querySelector('#housing-price');
 const rooms = filter.querySelector('#housing-rooms');
 const guests = filter.querySelector('#housing-guests');
@@ -11,9 +11,16 @@ const PRICE_TYPES = {
 };
 // пробую фильтр с типой жилья деструктурировать
 
-const getFilterByType = (offer) => type.value === 'any' || offer.type === type.value;
-// или так пробовала
-// const getFilterByType = (type) => type.value === 'any' || type === type.value;
+// const getFilterByType = (type) => {
+
+//   return typeFilter.value === 'any' || type === typeFilter.value
+//   ,
+//   // eslint-disable-next-line no-console
+//   console.log(typeFilter.value)
+// };
+
+
+const getFilterByType = (type) => typeFilter.value === 'any' || type === typeFilter.value;
 
 const getFilterByPrice = (data) => {
   switch (price.value) {
