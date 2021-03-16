@@ -31,28 +31,11 @@ const getFilterByGuests = (guests) => (guestsFilter.value !== 'any') ? guests ==
 
 
 const getFilterByFeatures = (features) => {
-  let result = true;
-
-  featuresFilter.querySelectorAll('input:checked').forEach((item) => {
-    if (features.indexOf(item.value) === -1) {
-      result = false;
-    }
+  const selectedFeatures = featuresFilter.querySelectorAll('input:checked');
+  return Array.from(selectedFeatures).every((input) => {
+    return features.includes(input.value);
   });
-  return result;
-}
-
-
-
-// console.log('ok')
-// let check = featuresFilter.querySelectorAll('input:checked');
-// const getFilterByFeatures = (features) => {
-//   let result = true;
-//   check.every((features) === -1)
-
-
-//   return result;
-// }
-
+};
 
 const getFilters = ({offer}) => {
   return (
