@@ -1,11 +1,8 @@
 import {sendData} from './api.js';
-// import {showAlert
-//   //, isEscEvent
-// } from './utils.js';
 import {form, address} from './form.js';
 import {mapFilters} from './disabled-page.js';
 import {mainMarker, CENTER_LAT, CENTER_LNG} from './map.js';
-
+import { resetPreview } from './avatar.js';
 
 const setUserFormSubmit = (onSuccess) => {
 
@@ -21,6 +18,7 @@ const setUserFormSubmit = (onSuccess) => {
 
 const resetForm = function () {
   form.reset();
+  resetPreview();
 }
 
 const resetMapFiltersForm = function () {
@@ -105,9 +103,6 @@ setClearButtonClick()
 const onSuccess = () => {
   showSuccessMessage();
   resetAddForm();
-
-  // eslint-disable-next-line no-console
-  console.log('vse ok');
 };
 
 

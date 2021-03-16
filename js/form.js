@@ -1,5 +1,3 @@
-//import {setAddress} from './map.js'
-
 const TitileLength = {MIN: 30, MAX: 100}
 const MAX_PRICE = 1000000;
 
