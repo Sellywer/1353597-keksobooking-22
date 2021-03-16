@@ -1,65 +1,66 @@
 const filter = document.querySelector('.map__filters');
-const typeFilter = filter.querySelector('#housing-type');
-const price = filter.querySelector('#housing-price');
-const rooms = filter.querySelector('#housing-rooms');
-const guests = filter.querySelector('#housing-guests');
-const features = filter.querySelector('#housing-features');
+const typeFilter  = filter.querySelector('#housing-type');
+const priceFilter = filter.querySelector('#housing-price');
+const roomsFilter = filter.querySelector('#housing-rooms');
+const guestsFilter = filter.querySelector('#housing-guests');
+const featuresFilter = filter.querySelector('#housing-features');
 
 const PRICE_TYPES = {
   'LOW': 10000,
   'HIGH': 50000,
 };
-// пробую фильтр с типой жилья деструктурировать
-
-// const getFilterByType = (type) => {
-
-//   return typeFilter.value === 'any' || type === typeFilter.value
-//   ,
-//   // eslint-disable-next-line no-console
-//   console.log(typeFilter.value)
-// };
-
 
 const getFilterByType = (type) => typeFilter.value === 'any' || type === typeFilter.value;
 
-const getFilterByPrice = (data) => {
-  switch (price.value) {
+const getFilterByPrice = (price) => {
+  switch (priceFilter.value) {
     case 'low':
-      return data.offer.price < PRICE_TYPES['LOW'];
+      return price < PRICE_TYPES['LOW'];
     case 'middle':
-      return (data.offer.price >= PRICE_TYPES['LOW']) && (data.offer.price <= PRICE_TYPES['HIGH']);
+      return (price >= PRICE_TYPES['LOW']) && (price <= PRICE_TYPES['HIGH']);
     case 'high':
-      return data.offer.price > PRICE_TYPES['HIGH'];
+      return price > PRICE_TYPES['HIGH'];
     default:
       return true;
   }
 };
 
-const getFilterByRooms = (data) => rooms.value === 'any' || data.offer.rooms === parseInt(rooms.value, 10);
+const getFilterByRooms = (rooms) => roomsFilter.value === 'any' || rooms === parseInt(roomsFilter.value, 10);
 
-const getFilterByGuests = (data) => {
-  return (guests.value !== 'any') ? data.offer.guests === parseInt(guests.value, 10) : true;
-}
+const getFilterByGuests = (guests) => (guestsFilter.value !== 'any') ? guests === parseInt(guestsFilter.value, 10) : true;
 
-const getFilterByFeatures = (data) => {
+
+const getFilterByFeatures = (features) => {
   let result = true;
 
-  features.querySelectorAll('input:checked').forEach((item) => {
-    if (data.indexOf(item.value) === -1) {
+  featuresFilter.querySelectorAll('input:checked').forEach((item) => {
+    if (features.indexOf(item.value) === -1) {
       result = false;
     }
   });
-
   return result;
 }
 
-const getFilters = (data) => {
+
+
+// console.log('ok')
+// let check = featuresFilter.querySelectorAll('input:checked');
+// const getFilterByFeatures = (features) => {
+//   let result = true;
+//   check.every((features) === -1)
+
+
+//   return result;
+// }
+
+
+const getFilters = ({offer}) => {
   return (
-    getFilterByType(data) &&
-    getFilterByPrice(data) &&
-    getFilterByRooms(data) &&
-    getFilterByGuests (data) &&
-    getFilterByFeatures(data.offer.features)
+    getFilterByType(offer.type) &&
+    getFilterByPrice(offer.price) &&
+    getFilterByRooms(offer.rooms) &&
+    getFilterByGuests (offer.guests) &&
+    getFilterByFeatures(offer.features)
   )
 }
 
