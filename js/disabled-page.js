@@ -1,4 +1,5 @@
 import {form} from './form.js'
+import { initPhotoUploaders} from './avatar.js';
 
 const adFormHeader = form.querySelector('.ad-form-header');
 const adFormElements = form.querySelectorAll('.ad-form__element');
@@ -39,6 +40,7 @@ const disabledPageState = () => {
 const activatePageState = () => {
   setAdFormActive();
   setMapFiltersActive();
+  initPhotoUploaders();
 };
 
 disabledPageState();
