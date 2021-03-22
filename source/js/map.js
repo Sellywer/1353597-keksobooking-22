@@ -55,8 +55,8 @@ const offerIcon = L.icon({
 
 let markers = [];
 
-const createOfferPins = (add) => {
-  add
+const createOfferPins = (ads) => {
+  ads
     .slice()
     .filter(getFilters)
     .slice(0, COUNT_OFFERS)

@@ -1,9 +1,10 @@
-const filter = document.querySelector('.map__filters');
-const typeFilter  = filter.querySelector('#housing-type');
-const priceFilter = filter.querySelector('#housing-price');
-const roomsFilter = filter.querySelector('#housing-rooms');
-const guestsFilter = filter.querySelector('#housing-guests');
-const featuresFilter = filter.querySelector('#housing-features');
+import {mapFilters} from './disabled-page.js'
+
+const typeFilter  = mapFilters.querySelector('#housing-type');
+const priceFilter = mapFilters.querySelector('#housing-price');
+const roomsFilter = mapFilters.querySelector('#housing-rooms');
+const guestsFilter = mapFilters.querySelector('#housing-guests');
+const featuresFilter = mapFilters.querySelector('#housing-features');
 
 const PRICE_TYPES = {
   'LOW': 10000,
@@ -48,7 +49,7 @@ const getFilters = ({offer}) => {
 }
 
 const setFilterChange = (cb) => {
-  filter.addEventListener('change', () => {
+  mapFilters.addEventListener('change', () => {
     cb();
   });
 };
