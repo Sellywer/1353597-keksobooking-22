@@ -1,7 +1,7 @@
 import {sendData} from './api.js';
 import {form, address} from './form.js';
 import {mapFilters} from './disabled-page.js';
-import {mainMarker, CENTER_LAT, CENTER_LNG} from './map.js';
+import {mainMarker, CENTER_LAT, CENTER_LNG, setAddress} from './map.js';
 import { resetPreview } from './avatar.js';
 
 const setUserFormSubmit = (onSuccess) => {
@@ -19,6 +19,7 @@ const setUserFormSubmit = (onSuccess) => {
 const resetForm = function () {
   form.reset();
   resetPreview();
+  setAddress();
 }
 
 const resetMapFiltersForm = function () {
