@@ -1,4 +1,4 @@
-const TitileLength = {MIN: 30, MAX: 100}
+const TitleLength = {MIN: 30, MAX: 100}
 const MAX_PRICE = 1000000;
 
 const minPrice  = {
@@ -28,10 +28,10 @@ titleAd.addEventListener('invalid', () => {
 titleAd.addEventListener('input', () => {
   const valueLength = titleAd.value.length;
 
-  if (valueLength < TitileLength.MIN) {
-    titleAd.setCustomValidity('Ещё ' + (TitileLength.MIN - valueLength) + ' симв.');
-  } else if (valueLength > TitileLength.MAX) {
-    titleAd.setCustomValidity('Удалите лишние ' + (valueLength - TitileLength.MAX) + ' симв.');
+  if (valueLength < TitleLength.MIN) {
+    titleAd.setCustomValidity('Ещё ' + (TitleLength.MIN - valueLength) + ' симв.');
+  } else if (valueLength > TitleLength.MAX) {
+    titleAd.setCustomValidity('Удалите лишние ' + (valueLength - TitleLength.MAX) + ' симв.');
   } else {
     titleAd.setCustomValidity('');
   }
@@ -94,7 +94,6 @@ capacity.addEventListener('change', () => {
 roomNumber.addEventListener('change', () => {
   checkPlace();
 });
-
 
 // Адрес нередактируется
 

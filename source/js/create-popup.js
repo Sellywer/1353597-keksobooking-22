@@ -23,23 +23,30 @@ const renderOfferCard = ({offer, author}) => {
   cardElement.querySelector('.popup__text--time').textContent = `Заезд после ${offer.checkin}, выезд до ${offer.checkout}`;
 
   const similarFeaturesList = cardElement.querySelector('.popup__features');
-  similarFeaturesList.innerHTML = '';
+  if (offer.features.length > 0) {
+    similarFeaturesList.innerHTML = '';
 
-  for (let featuresList of offer.features) {
-    const element = `<li class="popup__feature popup__feature--${featuresList}"></li>`;
-    similarFeaturesList.insertAdjacentHTML('beforeend', element);
+    for (let featuresList of offer.features) {
+      const element = `<li class="popup__feature popup__feature--${featuresList}"></li>`;
+      similarFeaturesList.insertAdjacentHTML('beforeend', element);
+    }
+  } else {
+    similarFeaturesList.remove();
   }
 
   cardElement.querySelector('.popup__description').textContent = offer.description;
 
   const photosGallery = cardElement.querySelector('.popup__photos');
-  photosGallery.innerHTML = '';
+  if (offer.photos.length > 0) {
+    photosGallery.innerHTML = '';
 
-  for (let photosList of offer.photos) {
-    const element = `<img src="${photosList}" class="popup__photo" width="45" height="40" alt="Фотография жилья"></img>`;
-    photosGallery.insertAdjacentHTML('beforeend', element);
+    for (let photosList of offer.photos) {
+      const element = `<img src="${photosList}" class="popup__photo" width="45" height="40" alt="Фотография жилья"></img>`;
+      photosGallery.insertAdjacentHTML('beforeend', element);
+    }
+  } else {
+    photosGallery.remove();
   }
-
   return cardElement;
 };
 
