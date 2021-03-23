@@ -30,9 +30,6 @@ const resetMapFiltersForm = function () {
   mapFilters.reset();
 }
 
-
-// проверка
-
 const successTemplate = document.querySelector('#success').content;
 const successDiv = successTemplate.querySelector('div');
 const successElement = successDiv.cloneNode(true);
@@ -69,8 +66,6 @@ const removeMessage = () => {
     errorElement.remove();
   }
 };
-
-// окончание проверки
 
 const showSuccessMessage = () => {
   successElement.style.zIndex = POSITION_MESSAGE;
