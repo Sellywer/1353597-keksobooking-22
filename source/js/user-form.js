@@ -3,6 +3,10 @@ import {form, address} from './form.js';
 import {mapFilters} from './disabled-page.js';
 import {mainMarker, CENTER_LAT, CENTER_LNG, setAddress} from './map.js';
 import { resetPreview } from './avatar.js';
+import {isEscEvent} from './utils.js'
+
+const POSITION_MESSAGE = 5000;
+const mainElement = document.querySelector('main');
 
 const setUserFormSubmit = (onSuccess) => {
 
@@ -26,57 +30,62 @@ const resetMapFiltersForm = function () {
   mapFilters.reset();
 }
 
-const showSuccessMessage = function () {
-  const successTepmplate = document.querySelector('#success').content;
-  const successDiv = successTepmplate.querySelector('div');
-  const successElement = successDiv.cloneNode(true);
-  successElement.style.zIndex = '5000';
-  const mainElement = document.querySelector('main');
-  mainElement.append(successElement);
 
-  const onWindowClick = () => {
-    successElement.classList.add('hidden');
-    window.removeEventListener('click', onWindowClick);
-  };
-  const onWindowKeyDown = (evt) => {
-    if (evt.key === 'Escape') {
-      successElement.classList.add('hidden');
-      window.removeEventListener('keydown', onWindowKeyDown);
-    }
+// проверка
+
+const successTemplate = document.querySelector('#success').content;
+const successDiv = successTemplate.querySelector('div');
+const successElement = successDiv.cloneNode(true);
+
+const errorTemplate = document.querySelector('#error').content;
+const errorDiv = errorTemplate.querySelector('div');
+const errorButton = errorDiv.querySelector('.error__button');
+
+const errorElement = errorDiv.cloneNode(true);
+
+const onPopupEscKeydown = (evt) => {
+  if (isEscEvent(evt)) {
+    evt.preventDefault();
+    removeMessage();
   }
+};
 
-  window.addEventListener('click', onWindowClick);
-  window.addEventListener('keydown', onWindowKeyDown);
+const onWindowClick = (evt) => {
+  evt.preventDefault();
+  removeMessage();
+  document.classList.add('hidden');
+};
+
+const removeMessage = () => {
+  document.removeEventListener('click', onWindowClick);
+  document.removeEventListener('keydown', onPopupEscKeydown);
+
+  if (successElement) {
+    successElement.remove();
+  }
+  errorButton.removeEventListener('click', onWindowClick);
+
+  if (errorElement) {
+    errorElement.remove();
+  }
+};
+
+// окончание проверки
+
+const showSuccessMessage = () => {
+  successElement.style.zIndex = POSITION_MESSAGE;
+  mainElement.append(successElement);
+  document.addEventListener('keydown', onPopupEscKeydown);
+  document.addEventListener('click', onWindowClick);
 }
 
-const showErrorMessage = function () {
-  const errorTepmplate = document.querySelector('#error').content;
-  const errorDiv = errorTepmplate.querySelector('div');
-  const errorButton = errorDiv.querySelector('.error__button');
+const showErrorMessage = () => {
 
-  const errorElement = errorDiv.cloneNode(true);
-  errorElement.style.zIndex = '5000';
-  const mainElement = document.querySelector('main');
+  errorElement.style.zIndex = POSITION_MESSAGE;
   mainElement.append(errorElement);
-
-  const onWindowClick = () => {
-    errorElement.classList.add('hidden');
-    window.removeEventListener('click', onWindowClick)
-  }
-  const onWindowKeyDown = (evt) => {
-    if (evt.key === 'Escape') {
-      errorElement.classList.add('hidden');
-      window.removeEventListener('keydown', onWindowKeyDown);
-    }
-  }
-  const onButtonClick = () => {
-    errorElement.classList.add('hidden');
-    errorButton.removeEventListener('click', onButtonClick);
-  };
-
-  window.addEventListener('click', onWindowClick);
-  window.addEventListener('keydown', onWindowKeyDown);
-  errorButton.addEventListener('click', onButtonClick)
+  document.addEventListener('keydown', onPopupEscKeydown);
+  document.addEventListener('click', onWindowClick);
+  errorButton.addEventListener('click', onWindowClick);
 };
 
 
