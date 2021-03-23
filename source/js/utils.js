@@ -23,6 +23,4 @@ const showAlert = (message='Не удалось загрузить данные'
 
 const isEscEvent = (evt) => evt.key === 'Escape' || evt.key === 'Esc';
 
-const isEnterEvent = (evt) => evt.key === 'Enter';
-
-export {showAlert, isEscEvent, isEnterEvent};
+export {showAlert, isEscEvent};
