@@ -39,10 +39,9 @@ const disabledPageState = () => {
 
 const activatePageState = () => {
   setAdFormActive();
-  setMapFiltersActive();
   initPhotoUploaders();
 };
 
 disabledPageState();
 
-export {activatePageState, disabledPageState, mapFilters}
+export {activatePageState, disabledPageState, mapFilters, setMapFiltersActive}
