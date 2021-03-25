@@ -50,7 +50,6 @@ const onPopupEscKeydown = (evt) => {
 const onWindowClick = (evt) => {
   evt.preventDefault();
   removeMessage();
-  document.classList.add('hidden');
 };
 
 const removeMessage = () => {

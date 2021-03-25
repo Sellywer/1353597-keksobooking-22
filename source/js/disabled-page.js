@@ -11,25 +11,33 @@ const mapFeatures = document.querySelector('.map__features');
 const setAdFormDisabled = () => {
   form.classList.add('ad-form--disabled');
   adFormHeader.disabled = true;
-  adFormElements.forEach(formElement => formElement.disabled = true);
+  adFormElements.forEach((formElement) => {
+    formElement.disabled = true;
+  });
 };
 
 const setAdFormActive = () => {
   form.classList.remove('ad-form--disabled');
   adFormHeader.disabled = false;
-  adFormElements.forEach(formElement => formElement.disabled = false);
+  adFormElements.forEach((formElement) => {
+    formElement.disabled = false;
+  });
 };
 
 const setMapFiltersDisabled = () => {
   mapFilters.classList.add('map__filters--disabled');
-  mapFiltersItem.forEach(mapFilterId => mapFilterId.disabled = true);
   mapFeatures.disabled = true;
+  mapFiltersItem.forEach((mapFilterId) => {
+    mapFilterId.disabled = true;
+  });
 };
 
 const setMapFiltersActive = () => {
   mapFilters.classList.remove('map__filters--disabled');
-  mapFiltersItem.forEach(mapFilterId => mapFilterId.disabled = false);
   mapFeatures.disabled = false;
+  mapFiltersItem.forEach((mapFilterId) => {
+    mapFilterId.disabled = false;
+  });
 };
 
 const disabledPageState = () => {

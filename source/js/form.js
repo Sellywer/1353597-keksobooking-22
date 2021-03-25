@@ -1,5 +1,7 @@
-const TitleLength = {MIN: 30, MAX: 100}
+const TitleLength = {MIN: 30, MAX: 100};
 const MAX_PRICE = 1000000;
+const MAX_ROOM_COUNT = 100;
+const MIN_ROOM_CAPACITY = 0;
 
 const minPrice  = {
   bungalow: 0,
@@ -76,9 +78,9 @@ timeOut.addEventListener('change', onSelectChange);
 // Гости и комнаты
 
 const checkPlace = () => {
-  if (roomNumber.value === '100' && capacity.value !== '0') {
+  if (roomNumber.value === MAX_ROOM_COUNT && capacity.value !== MIN_ROOM_CAPACITY) {
     capacity.setCustomValidity('Выберите вариант "Не для гостей"');
-  } else if (roomNumber.value !== '100' && capacity.value === '0') {
+  } else if (roomNumber.value !== MAX_ROOM_COUNT && capacity.value === MIN_ROOM_CAPACITY) {
     capacity.setCustomValidity('Выберите другой вариант');
   } else if (roomNumber.value < capacity.value) {
     capacity.setCustomValidity('Выберите меньшее число гостей');
