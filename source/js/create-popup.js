@@ -15,7 +15,7 @@ const renderOfferCard = ({offer, author}) => {
   cardElement.querySelector('.popup__avatar').setAttribute('src', author.avatar);
   cardElement.querySelector('.popup__title').textContent = offer.title;
   cardElement.querySelector('.popup__text--address').textContent = offer.address;
-  cardElement.querySelector('.popup__text--price').innerHTML = `${offer.price} ₽/ночь`;
+  cardElement.querySelector('.popup__text--price').textContent = `${offer.price} ₽/ночь`;
 
   cardElement.querySelector('.popup__type').textContent = getTypeRu[offer.type];
 
